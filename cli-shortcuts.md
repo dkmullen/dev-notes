@@ -32,10 +32,52 @@
 
 `ctrl-r` enters reverse search of history - so `ctrl-r` then `curl` shows me the most recent curl command, then I can scroll backward through them with more `ctrl-r`
 
+### FIND
+
+Finds every single file in current working dir including subdirectories
+
+`find ~/Downloads` - find everything in Downloads + its subdirs
+
+`find ~/Downloads -type f` or `find ~/Downloads -type d` finds only files or directories
+
+`find ~/Downloads -name "*.md"` finds all md files in Downloads; Use `-iname` for case insensitive
+
+`find ~/Downloads -iname "*.md" | wc -l` pipes results to wordcount with the -l option counting the number of lines, so this is a way to count how many results exist for this search.
+
+`find -name "*[0-9]*" | wc -l` finds how many filenames contain a number
+
+`find -size +1G` or maybe `-50M`
+
+`find -user <username>`
+
+`find -iname "*[13579]_open*"` finds files that have an odd number, then \_open
+
+**TIMESTAMPS** (seen in `ls -l`)
+
+- `mtime`, or modification time, is when a file was last modified AKA when its contents last changed. `ls -l` shows this by default; doesn't change when name, props, location changes
+- `ctime`, or change time, is when a file was last changed. `ls -lc` includes permissions, name, location changes
+- `atime`, or access time, is updated when a file is read by an application or a command like `cat`. `ls -lu`
+
+**FIND WITH TIME**
+
+- `find -mmin -20`matches items that were modified LESS than 20 minutes ago. Use `amin` and `cmin` for time accessed/modified
+- We can use the `-mtime num` option to match files/folders that were last modified num\*24 hours ago. Not exactly by days, but by 24 hour periods
+
+**LOGICAL OPERATORS** `-not`, `-or`, `-and` (but AND is usually implied and often not needed)
+
+- `find -type f -not -name "*.html"` all files not ending in .html
+- `find -cmin -60 -not -name "*.log"` all files changed in the last 60 w/o .log
+- `!` is a shortcut for `-not`
+
 ---
 
-ctrl-f and ctrl-b - works like the l/r arrows but keeping hands on home row
-ctrl-t - swaps current character with the preceeding one
-alt/opt-t - swap words
-!3543 (where 3543 is a line number in history) displays the command at that line, ready to run
-history lives in ~/.bash_history
+- ctrl-f and ctrl-b - works like the l/r arrows but keeping hands on home row
+- ctrl-t - swaps current character with the preceeding one
+- alt/opt-t - swap words
+- !3543 (where 3543 is a line number in history) displays the command at that line, ready to run
+- history lives in ~/.bash_history
+
+- locate - does a search of PATHNAMES across our machine - uses a db that it complies/maintains which is fast but may not be complete. Doesn't matter where you are when you do the search.
+- locate /bin/less??? = match the string and return items that have three chars after (/bin/lesskey)
+- options -i = ignore casing -l = limit the number of responses, ie -l3 -e = return results that exist - ie, if you delete files on the machine they will still be listed in the locate db for a time, so this option checks to see if they exist on the disc
+- also, sudo updatedb will update the db manually (time consuming)
