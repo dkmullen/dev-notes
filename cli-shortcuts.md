@@ -81,3 +81,17 @@ Finds every single file in current working dir including subdirectories
 - locate /bin/less??? = match the string and return items that have three chars after (/bin/lesskey)
 - options -i = ignore casing -l = limit the number of responses, ie -l3 -e = return results that exist - ie, if you delete files on the machine they will still be listed in the locate db for a time, so this option checks to see if they exist on the disc
 - also, sudo updatedb will update the db manually (time consuming)
+
+- cat - concatenate files together on screen or just show one: cat file1 file2 -n to show line numbers
+- tac - Does the same, but returns file in reverse order (last line first)
+- rev - Returns the file with the lines reversed horizontally - cats = stac
+
+-less - show contents of file in paginated mode - move ahead a page with SPACE or F, back with B, ENTER or arrows to move by line, forward slash plus pattern to search, exit with q (man pages use less for display)
+
+- head - prints first n lines (10 by default) - head .bash_history shows first 10
+- tail - prints last n lines (10 by default) - tail -100 .bash_history (-100 is short for -n 100) shows last 100
+- tail -f (or -follow) causes tail to wait for changes in the file - useful for monitoring an active log file - `tail mylog -100 -f`
+
+-wc - word couun, returns 3 numbers - lines, words (or things separated by spaces, ie ' - ' is a word), bytes use -w for words, -l for lines, -m for chars, -c for bytes
+
+sort sorts the lines of a file - -r for reverse - `sort -r cats.txt` - use -n to sort numbers numerically, -u to show unique values
