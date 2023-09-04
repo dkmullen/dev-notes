@@ -69,29 +69,43 @@ Finds every single file in current working dir including subdirectories
 - `find -cmin -60 -not -name "*.log"` all files changed in the last 60 w/o .log
 - `!` is a shortcut for `-not`
 
+### VIEW FILE CONTENTS
+
+- `cat` - concatenate files together on screen or just show one: cat file1 file2 -n to show line numbers
+- `tac` - Does the same, but returns file in reverse order (last line first)
+- `rev` - Returns the file with the lines reversed horizontally - cats = stac
+- `less` - show contents of file in paginated mode - move ahead a page with **SPACE** or **F**, back with **B**; **ENTER** or **arrows** to move by line, **forward slash plus pattern** to search, exit with q (man pages use less for display)
+- `head` - prints first n lines (10 by default) - head .bash_history shows first 10
+- `tail` - prints last n lines (10 by default) - tail -100 .bash_history (-100 is short for -n 100) shows last 100
+- `tail -f` (or -follow) causes tail to wait for changes in the file - useful for monitoring an active log file - `tail mylog -100 -f`
+- `wc` - word count, returns 3 numbers - lines, words (or things separated by spaces, ie ' - ' is a word), bytes use `-w` for words, `-l` for lines, `-m` for chars, `-c` for bytes
+- `sort` - sorts the lines of a file - `-r` for reverse - `sort -r cats.txt` - use `-n` to sort numbers numerically, `-u` to show unique values
+
 ---
 
 - ctrl-f and ctrl-b - works like the l/r arrows but keeping hands on home row
 - ctrl-t - swaps current character with the preceeding one
 - alt/opt-t - swap words
 - !3543 (where 3543 is a line number in history) displays the command at that line, ready to run
-- history lives in ~/.bash_history
-
+- history lives in `~/.bash_history`
 - locate - does a search of PATHNAMES across our machine - uses a db that it complies/maintains which is fast but may not be complete. Doesn't matter where you are when you do the search.
 - locate /bin/less??? = match the string and return items that have three chars after (/bin/lesskey)
 - options -i = ignore casing -l = limit the number of responses, ie -l3 -e = return results that exist - ie, if you delete files on the machine they will still be listed in the locate db for a time, so this option checks to see if they exist on the disc
 - also, sudo updatedb will update the db manually (time consuming)
 
-- cat - concatenate files together on screen or just show one: cat file1 file2 -n to show line numbers
-- tac - Does the same, but returns file in reverse order (last line first)
-- rev - Returns the file with the lines reversed horizontally - cats = stac
+### Redirecting
 
--less - show contents of file in paginated mode - move ahead a page with SPACE or F, back with B, ENTER or arrows to move by line, forward slash plus pattern to search, exit with q (man pages use less for display)
+- `date > today.txt`
+- `sort -n prices.md > newprices.txt`
+- `ls -la /my/dir > filelist.txt`
+- `echo $PATH >> path.txt`
+- `echo $PATH 2> errorlog.txt`
+- `echo $PATH 2>> errorlog.txt`
+- `echo $PATH >> path.txt 2>> errorlog.txt` (redir both output and error - put output FIRST)
+- `echo $PATH &>> path.txt` (shortcut to redir standout and err to same file)
 
-- head - prints first n lines (10 by default) - head .bash_history shows first 10
-- tail - prints last n lines (10 by default) - tail -100 .bash_history (-100 is short for -n 100) shows last 100
-- tail -f (or -follow) causes tail to wait for changes in the file - useful for monitoring an active log file - `tail mylog -100 -f`
-
--wc - word couun, returns 3 numbers - lines, words (or things separated by spaces, ie ' - ' is a word), bytes use -w for words, -l for lines, -m for chars, -c for bytes
-
-sort sorts the lines of a file - -r for reverse - `sort -r cats.txt` - use -n to sort numbers numerically, -u to show unique values
+- > creates a new file if none exists, OVERWRITES an existing one
+- > > also creates a new file, APPENDS to existing
+- 2> redirects standard error, so error message goes to file, not screen - OVERWRITES
+- 2>> appends
+- We use 2 b/c that's the number for standerr; standin is 0, standout is 1, so > is actually short for 1>
