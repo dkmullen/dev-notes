@@ -65,3 +65,28 @@ The inverse of exponetiation
 For shorthand, it's common to say log(8), refering to base 2. The log of a number roughly measures the number of times you can divide it by two before you get a value that is less than or equal to one.
 
 O(log n) is very good time complexity, just a bit slower than O(1)
+
+=====
+
+## Complexity of JS objects and their methods
+
+### Objects
+
+- **Insertion, removal, access** of items in an object is O(1), or constant time, the best we can do.
+- **Searching** is O(N), or linear. Might have to look at items one by one to find a certain value, so function runs as many times as there are values.
+
+- **Object.keys, Object.values, Object.entries** = O(n)
+- **<myObject>.hasOwnProperty('property')** = O(1)
+
+### Arrays
+
+Order can come at a cost. Use when you need order; otherwise, maybe not.
+
+- **Access** by index = O(1)
+- **Adding to / removing from the end** (push & pop) - O(1)
+- **Adding to ? removing fromthe beginning** (unshift, shift) - O(N) b/c everything has to be reindexed
+- **Searching** O(N)
+- **Concat, slice, splice, forEach, map, filter, reduce, etc.** - O(N)
+  **Sort** - O(N \* log N)
+
+Takeaways - Objects are fast when you don't need order. With arrays, add and remove to the end if you can.
