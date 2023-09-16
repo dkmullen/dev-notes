@@ -109,3 +109,25 @@ Finds every single file in current working dir including subdirectories
 - 2> redirects standard error, so error message goes to file, not screen - OVERWRITES
 - 2>> appends
 - We use 2 b/c that's the number for standerr; standin is 0, standout is 1, so > is actually short for 1>
+
+### Environment
+
+- `printenv` shows my environment vars.
+- `echo $PATH` shows PATH
+- `myvar=HeyNow` or `myvar="Hank Kingsley"` sets a shell var which belongs to the current(?) shell session
+- `export myvar=HeyNow` sets an environment variable, or `export mayvar` if it has already been set as a shell var
+- `unset myvar` removes it from the set of env vars
+
+For "non-login" sessions (typical sessions when you launch the terminal from the GUI). `etc/bash.bashrc`contains global configs for all users, and `~/.bashrc` contains specific settings for each user. For example, `PS1` which defines the style of the prompt, lives here.
+
+To change setting in .bashrc, first `cp .bashrc .bashrc.old` for a backup!
+
+**Aliases** - Shortcuts for common commands. For ex, `ll` for `ls -la` (which actually comes built-in with Ubuntu) and `l` does `ls -lah` (h for human-readable)
+
+These store aliases for the session only...
+
+- `alias hank='echo HEY NOW!'` then when I enter hank, I get HEY NOW!
+- `type hank` tells me that 'hank is an alias for echo HEY NOW!
+- No man page for `type` :(
+
+To make them permenant, the same commands need to be in `~/.bashrc` or put them in another dir that is referenced in `~/.bashrc`. My bashrc comes with a built-in if statement pointing to `~/.bash_aliases`
