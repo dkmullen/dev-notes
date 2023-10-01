@@ -61,7 +61,7 @@ Finds every single file in current working dir including subdirectories
 **FIND WITH TIME**
 
 - `find -mmin -20`matches items that were modified LESS than 20 minutes ago. Use `amin` and `cmin` for time accessed/modified
-- We can use the `-mtime num` option to match files/folders that were last modified num\*24 hours ago. Not exactly by days, but by 24 hour periods
+- We can use the `-mtime num` option to match files/folders that were last modified num*24 hours ago. Not exactly by days, but by 24 hour periods
 
 **LOGICAL OPERATORS** `-not`, `-or`, `-and` (but AND is usually implied and often not needed)
 
@@ -131,3 +131,35 @@ These store aliases for the session only...
 - No man page for `type` :(
 
 To make them permenant, the same commands need to be in `~/.bashrc` or put them in another dir that is referenced in `~/.bashrc`. My bashrc comes with a built-in if statement pointing to `~/.bash_aliases`
+
+### Piping
+
+- `ls -la | less` for pagination of large set of results
+- `ls -la | sort -h | head -8` - List all files in long format, sort by comparing human-readable numbers, output the first eight results
+
+Redirecting v Piping - `>` redirects standout to a file; `|` connects a command to another command
+
+- `tee` (like a T-shaped fitting in a pipe) sends standard output in two directions, ie to a file and to another command at the same time.
+  `cat colors.txt words.txt | tee colorsAndWords.txt | wc` concatenates two files and (with the tee) sends the results to a new file AND counts the words
+
+### Cron
+
+Edit cron job with the command `crontab -e` (the e fires up the editor, and crontab is the program that handles cron files)
+
+**Syntax** - Five values with a space (or several spaces, doesn't matter) between them.
+
+- a b c d e command = minute (0-59) hour (0-23), day of month (1-31) month (1-12, or spell out the month), day of week (0-6))
+- Other syntax = `*` for any value, **comma** for a list of values (5,6,8), **dash** for range of values (1-3) and `*/5` for step values (every 5 in this case)
+
+**Examples**
+
+- `30 * * * * * <command>` - Run on min 30 of every hour, day... (not every 30 minutes!)
+- `*/30 * * * * * <command>` - Every 30 min
+- `0 0 * * *` - Every day at midnight (when the hour and minute are both 0)
+- `30 6 * * *` - Every day at 6:30 am
+- `30 6 * * 1` - Every Monday at 6:30 am
+- `30 6 * 4 1` - Every Monday in April at 6:30 am
+- `0 0 1 * *` - First day of each month at midnight
+- `* * * * * echo "Hey now! - $(date)" >> ~/cron-demo.log 2>&1` - Echo the message to the file every minute and save errors in the same file.
+
+https://crontab.guru is a helper site
