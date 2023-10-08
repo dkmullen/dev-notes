@@ -61,7 +61,7 @@ Finds every single file in current working dir including subdirectories
 **FIND WITH TIME**
 
 - `find -mmin -20`matches items that were modified LESS than 20 minutes ago. Use `amin` and `cmin` for time accessed/modified
-- We can use the `-mtime num` option to match files/folders that were last modified num*24 hours ago. Not exactly by days, but by 24 hour periods
+- We can use the `-mtime num` option to match files/folders that were last modified num\*24 hours ago. Not exactly by days, but by 24 hour periods
 
 **LOGICAL OPERATORS** `-not`, `-or`, `-and` (but AND is usually implied and often not needed)
 
@@ -163,3 +163,19 @@ Edit cron job with the command `crontab -e` (the e fires up the editor, and cron
 - `* * * * * echo "Hey now! - $(date)" >> ~/cron-demo.log 2>&1` - Echo the message to the file every minute and save errors in the same file.
 
 https://crontab.guru is a helper site
+
+### Expansion
+
+Using wildcards is called expansion b/c `ls *.doc` gets expanded by the shell to be `ls cats.doc dogs.doc` etc
+
+- In addition to the `*` wildcard, there is `?` which matches a single character. Ie, `ls app.??` matches app.js, app.py, not app.txt
+- Square brackets can specify a range - `ls pic[123].png` or `ls pic[1-3].png` will return pic1.png, pic2.png, pic3.png - `ls [A-Z]*` lists all files that start with a capital letter
+- `^` in brackets negates, ie `ls [^A-Z]*` lists all that don't begin with capital letters
+
+**Curley braces**
+
+- `touch {M,T,W,TH,F}-journal.txt` makes m-journal.txt...
+- `mkdir jan{1..31}` makes directories jan1 thru jan31
+- `mkdir jan{1..31..2}` makes directories jan1 thru jan31 adds a third value for the range, and makes jan1, jan3, jan5 etc
+- `mkdir -p {Mon,Tue,Wed,Thur,Fri}/{Breakfast,Lunch,Dinner}` makes directories for each day, each of which has subdirs for each meal (the `-p` arg says to not throw an error if the parent dir doesn't exist, which is the normal behavior if you try to create a subdir to a non-existent parent)
+- `mkdir -p {Mon,Tue/{1..10}{AM,PM},Wed,Thur,Fri}/{Breakfast,Lunch,Dinner}` does the same but with Tuesday, makes subs for 1-10 am and pm
