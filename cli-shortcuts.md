@@ -179,3 +179,45 @@ Using wildcards is called expansion b/c `ls *.doc` gets expanded by the shell to
 - `mkdir jan{1..31..2}` makes directories jan1 thru jan31 adds a third value for the range, and makes jan1, jan3, jan5 etc
 - `mkdir -p {Mon,Tue,Wed,Thur,Fri}/{Breakfast,Lunch,Dinner}` makes directories for each day, each of which has subdirs for each meal (the `-p` arg says to not throw an error if the parent dir doesn't exist, which is the normal behavior if you try to create a subdir to a non-existent parent)
 - `mkdir -p {Mon,Tue/{1..10}{AM,PM},Wed,Thur,Fri}/{Breakfast,Lunch,Dinner}` does the same but with Tuesday, makes subs for 1-10 am and pm
+
+### Quotes
+
+Double quotes allow use of extra spaces, and doesn't change the meaning of $, backslash, or backtick. Single quotes take everything as literal.
+
+- `echo "Today is...     $(date)"` gives Today is... Mon Oct 7<etc>
+- `echo 'Today is...     $(date)'` gives Today is... $(date)
+
+### Command substition
+
+$(date) or `date` works
+
+- `echo $(whoami)` or echo `whoami`
+
+### grep
+
+Searches the CONTENTS of files (or text not in a file too) for matches
+
+- `grep <pattern> <file>` - ie `grep chicken animals.txt` finds all occurances of 'chicken' in animals.txt, whether chicken is part of a word or whole.
+- `-w` - the word option, matches full words only, ie `grep -w 'mail' myfile.txt` will find mail but ignore email, mailed, etc.
+- `-r` is the recursive option - `grep -ri 'chicken'` searches the current dir and all subs (case-insentive, which is what the `-i` is)
+- `grep -ri parm[ae]san' meals/food` searches the dir for two possible spellings of parmesan (with an a and with an e in the middle)
+- `-c` returns the count of matches, not the matches themselves
+- `-n` returns the line number that the result is on
+
+#### grep and regex
+
+- Any single character (.): `grep 'p....' <file or path>` returns p + any four chars, b/c the dot represents any single character
+- Start of a line (^): `grep '^I' <file>` returns lines that begin with I
+- End of a line ($): `grep ')$' <file>` returns lines that end with )
+- Also: `[abc]` = characters in a set; `[^abc]` characters not in a set; `[A-Z]` chars in a range
+
+To use extended regex stuff, such as `?` (match 0 or one occurances). `{}` (used to set the number of occurances), we have to use the extended version of grep OR escape these special characters with '\'
+
+Extended grep can be used by typing `egrep` or using the `-E` option
+
+`[aeiou]{3}` means match three vowels in a row (but only using extended grep), and `[aeiou]{2,4} means anything from two to four vowels in a row
+
+#### Piping to grep
+
+- `man grep | grep 'count' -i` returns the word 'count' from the grep man page
+- `ls -l | grep 'Aug'` returns files with an Aug date
