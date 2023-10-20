@@ -221,3 +221,30 @@ Extended grep can be used by typing `egrep` or using the `-E` option
 
 - `man grep | grep 'count' -i` returns the word 'count' from the grep man page
 - `ls -l | grep 'Aug'` returns files with an Aug date
+
+### Permissions
+
+- `drwxr-xr-x`- Execute on a dir is required to open it
+
+- `chmod u+x myfile.txt` - Who? (u, g, o [user, group, others] or a for all), add or remove? (+, -, =), which permission? (r, w, x). The example gives the user executable permission
+- `chmod a=rx myFile.txt` gives all the permissions to read and execute
+
+#### Octal notation
+
+**Octal - Binary - File Mode**
+
+0 000 ---
+
+1 001 --x
+
+2 010 -w-
+
+3 011 -wx
+
+4 100 r--
+
+5 101 r-x
+
+6 110 rw-
+
+7 111 rwx
